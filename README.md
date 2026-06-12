@@ -1,6 +1,6 @@
 # AI Agent MD Setup Guide
 
-이 폴더는 `gemma4_ondevice_test` 프로젝트의 Codex-Claude 협업 구조를 참고해, 다른 프로젝트에 AI Agent용 Markdown 문서와 자동 인계 구조를 구축하기 위한 가이드다.
+이 폴더는 다른 프로젝트에 AI Agent용 Markdown 문서와 자동 인계 구조를 구축하기 위한 가이드다.
 
 이 가이드에서 `Codex`는 관리자 역할 이름이다. 실제 운영에서는 `GPT`, `ChatGPT`, `Claude Code`, 다른 계획형 Agent로 치환해도 된다. 중요한 것은 제품 맥락과 작업 범위를 정리하는 관리자 역할과, 구현과 검증을 수행하는 실무자 역할을 분리하는 점이다.
 
@@ -11,9 +11,9 @@
 - Codex가 작업을 정의하고 Claude가 구현하는 인계 흐름을 문서와 스크립트로 연결한다.
 - 자동 호출 결과를 로그로 남겨 추적 가능하게 만든다.
 
-## 참조한 핵심 구조
+## 핵심 구조
 
-`gemma4_ondevice_test`는 아래 구조를 사용한다.
+권장 구조는 아래와 같다.
 
 ```text
 .
