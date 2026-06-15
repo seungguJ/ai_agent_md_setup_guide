@@ -4,22 +4,10 @@
 
 이 문서는 `ai_agent_md_setup_guide`의 작업 현황판이다.
 
-- 현재 진행 작업
-- 담당자
-- 상태
-- 최근 결정
-- 다음 액션
-
 ## 시작 전 참고 순서
 
-1. `project.md`
-2. `docs/collab_protocol.md`
-3. 역할 문서 (`AGENTS.md` 또는 `CLAUDE.md`)
-4. `business_context.md`
-5. `design.md`
-6. `README.md`
-7. 관련 `docs/modules/*.md`
-8. 필요 시 `SETUP_STEPS.md`
+- 읽기 순서는 `docs/collab_protocol.md`를 기준으로 본다.
+- 이 문서는 현재 작업 상태와 최근 결정만 관리한다.
 
 ## 상태 규칙
 
@@ -34,20 +22,23 @@
 | ID | 작업명 | 담당 | 상태 | 산출물 | 비고 |
 |---|---|---|---|---|---|
 | P-001 | setup guide 골격 정리 | Codex | done | 템플릿, README, setup 문서 | 초기 문서화 |
-| P-002 | GPT 관리자 치환 규칙 추가 | Codex | done | README, SETUP_STEPS, 템플릿 보강 | GPT bootstrap 포함 |
-| P-003 | 실제 Claude handoff 검증과 setup 보정 | Codex | review | 루트 운영 문서, handoff 로그, 검증 반영 문서 | 2026-06-12 live connectivity check 성공 |
+| P-002 | 최소 지시 중심 구조 보강 | Codex | done | README, 템플릿 보강 | 문서 분리 원칙 반영 |
+| P-003 | 독립 운영 구조 전환 | Codex | done | 루트 운영 문서, 템플릿 정리 | 역할 분리 제거 |
+| P-004 | 연구 근거 및 예시 보강 | Codex | done | README, 운영 규칙, 예시 문서 | 평가 반영 |
 
 ## 최근 결정
 
-- 이 저장소 자체도 템플릿 모음이 아니라 실행 검증 가능한 예시 프로젝트처럼 유지한다.
-- 관리자 역할 이름은 `Codex`로 두되 GPT가 그대로 대체 가능해야 한다.
-- Claude handoff 검증은 템플릿만이 아니라 루트 운영 문서를 기준으로 실행한다.
+- 이 저장소는 역할 분리형 운영보다 독립 실행 가능한 문서 구조를 우선한다.
+- `AGENTS.md`는 최소 규칙만 담고, 상세 설명은 별도 문서로 분리한다.
+- `CLAUDE.md`는 선택적 도구 메모로만 취급한다.
+- 읽기 순서는 `docs/collab_protocol.md`를 단일 기준으로 유지한다.
 
 ## 꼭 체크해야 할 목록
 
-- handoff 검증 결과가 실제 로그 파일로 남아야 한다.
-- 문서상 예시와 실제 스크립트 동작이 어긋나면 문서를 먼저 고친다.
-- `.claude/` 로그는 Git 추적 대상에 올리지 않는다.
+- 역할 분리 전제를 문서에서 제거한다.
+- 템플릿 목록과 실제 `templates/` 구성이 일치해야 한다.
+- 삭제된 운영 방식을 완료 기준에 남기지 않는다.
+- 오래된 완료 작업은 필요 시 `tasks/CHANGELOG_NOTES.md`로 이동한다.
 
 ## 다음 작업 작성 규칙
 
@@ -59,6 +50,6 @@
 
 ## 완료 정의
 
-- 실제 검증 수행
-- 결과 반영
-- 관련 문서 갱신
+- 실제 문서 구조 반영
+- 관련 템플릿 갱신
+- 상호 참조 정리

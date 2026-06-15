@@ -1,97 +1,105 @@
 # AI Agent MD Setup Guide
 
-이 폴더는 다른 프로젝트에 AI Agent용 Markdown 문서와 자동 인계 구조를 구축하기 위한 가이드다.
+이 저장소는 AI 에이전트용 프로젝트 문서를 한 파일에 몰아넣지 않고, 최소 지시와 상세 문서를 분리해 운영하는 방법을 정리한 가이드다.
 
-이 가이드에서 `Codex`는 관리자 역할 이름이다. 실제 운영에서는 `GPT`, `ChatGPT`, `Claude Code`, 다른 계획형 Agent로 치환해도 된다. 중요한 것은 제품 맥락과 작업 범위를 정리하는 관리자 역할과, 구현과 검증을 수행하는 실무자 역할을 분리하는 점이다.
+핵심 원칙은 세 가지다.
 
-## 목표
+- `AGENTS.md`에는 에이전트가 반드시 지켜야 할 최소 규칙만 둔다.
+- 사람이 읽는 설명은 `README.md`, `ARCHITECTURE.md`, `docs/*.md`로 분리한다.
+- 현재 작업 지시는 `project.md`, `docs/template.md`, `tasks/*` 같은 작업 문서에 따로 둔다.
 
-- 프로젝트 안에서 AI Agent의 역할과 책임을 명확히 나눈다.
-- 작업 상태, 제품 맥락, 설계 맥락, 모듈 문서를 분리해 관리한다.
-- Codex가 작업을 정의하고 Claude가 구현하는 인계 흐름을 문서와 스크립트로 연결한다.
-- 자동 호출 결과를 로그로 남겨 추적 가능하게 만든다.
+긴 컨텍스트 파일 하나로 모든 것을 해결하려 하지 않고, 필요한 문서만 읽게 구조를 나누는 것이 목표다.
 
-## 핵심 구조
+## Research Basis
 
-권장 구조는 아래와 같다.
+이 저장소의 문서 원칙은 아래 자료를 직접 참고해 정리했다.
+
+- 2026-01-23, *On the Impact of AGENTS.md Files on the Efficiency of AI Coding Agents*: AGENTS.md가 있는 경우 실행 시간과 출력 토큰이 각각 감소하는 경향을 보고했다. 이 저장소는 이를 근거로 `AGENTS.md` 자체는 유지하되, 짧고 기능적인 규칙만 남긴다. https://arxiv.org/abs/2601.20404
+- 2025-11-17, *Agent READMEs: An Empirical Study of Context Files for Agentic Coding*: 실제 저장소의 컨텍스트 파일이 빌드/실행, 구현 세부, 아키텍처에 집중되고 보안/성능 같은 비기능 요구는 적게 다뤄진다고 보고했다. 이 저장소는 기능 중심 문서 구조를 기본으로 두되, 비기능 기준이 필요하면 별도 문서에 명시하도록 유도한다. https://arxiv.org/abs/2511.12884
+- 2026-02-12, *Evaluating AGENTS.md: Are Repository-Level Context Files Helpful for Coding Agents?*: 불필요한 요구가 많은 컨텍스트 파일은 성공률을 낮추고 비용을 높일 수 있으므로 최소 요구사항 중심으로 작성해야 한다고 결론냈다. 이 저장소가 `AGENTS.md`를 최소 규칙 문서로 제한하는 가장 직접적인 근거다. https://arxiv.org/abs/2602.11988
+- 2025-09-29, Anthropic, *Effective context engineering for AI agents*: 컨텍스트는 유한 자원이며, 장기 작업에서는 compaction과 structured note-taking이 중요하다고 설명한다. 이 저장소의 `tasks/*`, 아카이브 규칙, 문서 분리 원칙은 이 방향을 따른다. https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents
+
+요약하면, 이 저장소는 "컨텍스트 파일을 없애는 것"이 아니라 "최소 고신호 문서만 남기고 나머지는 역할별로 분리하는 것"을 목표로 한다.
+
+## 추천 구조
 
 ```text
 .
+├── README.md
 ├── AGENTS.md
 ├── CLAUDE.md
 ├── project.md
 ├── business_context.md
 ├── design.md
-├── README.md
 ├── ARCHITECTURE.md
 ├── docs/
-│   ├── agent_runtime.md
 │   ├── collab_protocol.md
+│   ├── examples/
 │   ├── template.md
-│   ├── handoffs/
 │   └── modules/
-└── scripts/
-    └── claude_handoff.sh
+├── tasks/
+│   ├── TODO.md
+│   ├── PROMPT.md
+│   └── CHANGELOG_NOTES.md
+└── templates/
 ```
 
-핵심은 역할 문서만 두는 것이 아니라, `project.md`를 현재 상태의 기준점으로 삼고 `docs/collab_protocol.md`, `docs/template.md`, `docs/agent_runtime.md`, `scripts/claude_handoff.sh`를 통해 실제 작업 인계까지 연결하는 것이다.
+`CLAUDE.md`는 선택 사항이다. 특정 도구가 자체 프로젝트 메모 파일을 읽는 경우에만 둔다. `AGENTS.md`와 역할을 나누기 위한 필수 파일은 아니다.
 
-## 권장 파일 세트
+## 파일 역할
 
-최소 구성:
+- `README.md`: 프로젝트 개요, 실행법, 문서 인덱스
+- `AGENTS.md`: 에이전트 공통 최소 규칙
+- `CLAUDE.md`: Claude Code 같은 특정 도구용 선택 메모
+- `project.md`: 현재 작업 상태와 최근 결정
+- `business_context.md`: 제품 목적, 사용자, 우선순위
+- `design.md`: 결과물 판단 기준
+- `ARCHITECTURE.md`: 구조, 모듈, 변경 영향 포인트
+- `docs/collab_protocol.md`: 작업 상태 관리와 문서 갱신 규칙
+- `docs/template.md`: 작업 등록과 작업 지시 템플릿
+- `docs/modules/*.md`: 기능 또는 문서 묶음별 상세 설명
+- `tasks/*`: 이번 작업에만 필요한 작업 목록과 프롬프트
+- `docs/examples/*`: 실제로 채워진 예시 문서
 
-- `AGENTS.md`: Codex 또는 관리자 Agent의 역할, 읽기 순서, 리뷰 기준
-- `CLAUDE.md`: Claude 또는 구현 Agent의 역할, 구현 원칙, 보고 형식
-- `project.md`: 작업 현황판, 상태 규칙, 최근 결정
-- `docs/collab_protocol.md`: 여러 Agent가 같은 프로젝트를 다룰 때의 협업 규칙
-- `docs/template.md`: 작업 등록, 작업 지시, 보고, 리뷰 템플릿
+## 단일 읽기 순서
 
-자동 연결까지 필요한 구성:
-
-- `docs/agent_runtime.md`: 자동 호출 규칙, 입력/출력 계약, 로그 정책
-- `scripts/claude_handoff.sh`: Claude CLI 호출 스크립트
-- `docs/handoffs/*.md`: Claude에게 넘길 작업 지시 파일
-- `.claude/handoffs/`: 실행된 prompt, response, meta 로그 저장 위치
-
-프로젝트 이해도를 높이는 구성:
-
-- `business_context.md`: 제품 목적, 사용자, 우선순위, 범위 밖 항목
-- `design.md`: UI/UX 또는 결과물 판단 기준
-- `README.md`: 프로젝트 구조 인덱스와 요구사항별 진입점
-- `ARCHITECTURE.md`: 큰 설계와 데이터/모듈 흐름
-- `docs/modules/*.md`: 기능 또는 모듈별 상세 문서
-- `bootstrap_prompt.md`: GPT 같은 관리자 Agent에게 첫 세팅을 맡길 때 쓰는 시작 프롬프트
-
-## Agent 연결 방식
-
-권장 흐름은 아래와 같다.
-
-1. 사용자가 Codex에게 요구사항을 전달한다.
-2. Codex가 `project.md`와 관련 문서를 읽고 작업 범위를 좁힌다.
-3. Codex가 `docs/handoffs/<task>.md`에 작업 지시를 작성한다.
-4. Codex가 `scripts/claude_handoff.sh --task-file docs/handoffs/<task>.md`를 실행한다.
-5. 스크립트가 `CLAUDE.md`를 system prompt에 붙이고 작업 지시를 Claude CLI에 전달한다.
-6. Claude가 구현 또는 검토 결과를 보고한다.
-7. 스크립트가 `.claude/handoffs/`에 prompt, response, meta 파일을 저장한다.
-8. Codex가 Claude 결과를 리뷰하고 승인, 보완 요청, 직접 수정 중 하나를 결정한다.
-9. 완료 시 `project.md`와 관련 문서를 갱신한다.
+읽기 순서는 `docs/collab_protocol.md`만 기준으로 유지한다. 다른 문서에는 같은 순서를 복제하지 않는다.
 
 ## 적용 순서
 
-1. 새 프로젝트 루트에 `templates/`의 파일들을 복사한다.
-2. 프로젝트명, 기술 스택, 제품 목적, 모듈명을 실제 프로젝트에 맞게 바꾼다.
-3. `README.md`에는 전체 구조와 요구사항별 진입 문서를 적는다.
-4. `project.md`에는 현재 작업과 최근 결정을 등록한다.
-5. `ARCHITECTURE.md`에 상위 계층, 데이터 흐름, 변경 영향 포인트를 적는다.
-6. `docs/modules/`에는 기능별 문서를 하나씩 추가한다.
-7. GPT를 관리자 역할로 쓸 경우 `bootstrap_prompt.md`를 초기 프롬프트로 사용해 프로젝트 문서 초안을 생성한다.
-8. 자동 연결이 필요하면 `scripts/claude_handoff.sh`를 복사하고 실행 권한을 준다.
-9. `claude` CLI 인증 후 연결 확인 handoff를 실행한다.
-10. 첫 실제 작업은 작은 파일 범위로 제한해 검증한다.
+1. `templates/`에서 기본 문서를 복사한다.
+2. `README.md`에 프로젝트 개요와 문서 인덱스를 채운다.
+3. `AGENTS.md`에는 최소 규칙만 남긴다.
+4. `project.md`에 현재 작업과 상태 규칙을 적는다.
+5. `business_context.md`, `design.md`, `ARCHITECTURE.md`를 실제 프로젝트 기준으로 채운다.
+6. `docs/modules/*.md`에 핵심 기능별 수정 진입점을 정리한다.
+7. 작업이 생기면 `project.md`와 `docs/template.md` 형식으로 범위를 분리해 기록한다.
+
+## 문서 크기 정책
+
+이 기준은 연구의 정량 임계값이 아니라, 최소 고신호 컨텍스트를 유지하라는 연구 결과를 바탕으로 이 저장소에 맞게 정한 운영 규칙이다.
+
+- `AGENTS.md`: 50줄 안팎 유지
+- 인덱스성 문서: 150줄 안팎을 넘기면 분리 검토
+- 한 문서에 목적이 2개 이상 섞이면 분리
+- 예시와 기록은 템플릿 본문에 누적하지 않고 `docs/examples/` 또는 `tasks/*`로 이동
+
+## context rot 대응
+
+- 끝난 작업은 계속 `project.md`에 쌓아두지 않고 필요 시 [tasks/CHANGELOG_NOTES.md](tasks/CHANGELOG_NOTES.md)로 이동한다.
+- `tasks/PROMPT.md`는 현재 작업용으로만 유지한다.
+- 오래된 예시는 `docs/examples/`에 모으고, 템플릿은 항상 최소형만 유지한다.
+
+## 실제 예시
+
+- 예시 개요: [docs/examples/README.md](docs/examples/README.md)
+- 샘플 모듈 문서: [docs/examples/sample-module.md](docs/examples/sample-module.md)
+- 샘플 작업 문서: [docs/examples/sample-task.md](docs/examples/sample-task.md)
+- 샘플 상태판: [docs/examples/sample-project.md](docs/examples/sample-project.md)
 
 ## 템플릿 복사 위치
 
-| 이 폴더의 파일 | 새 프로젝트 위치 |
+| 이 저장소 파일 | 새 프로젝트 위치 |
 |---|---|
 | `templates/AGENTS.md` | `AGENTS.md` |
 | `templates/CLAUDE.md` | `CLAUDE.md` |
@@ -101,74 +109,30 @@
 | `templates/design.md` | `design.md` |
 | `templates/docs_collab_protocol.md` | `docs/collab_protocol.md` |
 | `templates/docs_template.md` | `docs/template.md` |
-| `templates/docs_agent_runtime.md` | `docs/agent_runtime.md` |
 | `templates/module.md` | `docs/modules/<module-name>.md` |
-| `templates/handoff_connectivity_check.md` | `docs/handoffs/connectivity-check.md` |
+| `templates/tasks_TODO.md` | `tasks/TODO.md` |
+| `templates/tasks_PROMPT.md` | `tasks/PROMPT.md` |
+| `templates/tasks_CHANGELOG_NOTES.md` | `tasks/CHANGELOG_NOTES.md` |
 | `templates/bootstrap_prompt.md` | `bootstrap_prompt.md` |
-| `scripts/claude_handoff.sh` | `scripts/claude_handoff.sh` |
 
-## GPT로 바로 세팅할 때
+## 문서 설계 기준
 
-새 프로젝트에 아래 파일을 먼저 복사한다.
-
-- `AGENTS.md`
-- `CLAUDE.md`
-- `project.md`
-- `ARCHITECTURE.md`
-- `business_context.md`
-- `design.md`
-- `docs/collab_protocol.md`
-- `docs/template.md`
-- `docs/agent_runtime.md`
-- `docs/modules/<module-name>.md`
-- `bootstrap_prompt.md`
-
-그다음 GPT에게 최소한 아래 입력을 함께 준다.
-
-- 현재 프로젝트 루트 경로
-- 기술 스택
-- 제품 목적 한 줄
-- 핵심 기능 3~7개
-- 제외할 범위
-- 이미 있는 코드 또는 폴더 구조
-
-이 정보와 `bootstrap_prompt.md`만 있으면 GPT가 문서 초안, 모듈 분리, 첫 `project.md` 작업 등록까지 한 번에 만들 수 있게 구성하는 것이 목표다.
-
-## 검증된 Claude handoff 예시
-
-이 저장소에서는 2026-06-12에 아래 실제 실행으로 Claude 연결 확인을 검증했다.
-
-```bash
-bash scripts/claude_handoff.sh --task-file docs/handoffs/connectivity-check.md --label live-connectivity-check --timeout-seconds 180
-```
-
-검증 결과:
-
-- 종료 코드 `0`
-- `.claude/handoffs/20260612-225638-live-connectivity-check.prompt.md` 생성
-- `.claude/handoffs/20260612-225638-live-connectivity-check.response.md` 생성
-- `.claude/handoffs/20260612-225638-live-connectivity-check.meta.txt` 생성
-- response 파일에 `연결 확인 완료` 포함
-
-실동작 주의:
-
-- response 파일에는 Claude 응답 본문만 저장된다.
-- `Saved prompt to ...` 같은 저장 경로 안내는 스크립트 콘솔 출력에만 나타난다.
-- 따라서 자동 검증은 response 파일 내용과 파일 존재 여부를 나눠서 확인하는 편이 안전하다.
+- `AGENTS.md`는 짧게 유지한다.
+- 상세 설명은 `docs/`와 개별 문서로 보낸다.
+- 작업 지시는 현재 작업만 다룬다.
+- 역할 이름에 의존하지 않는다. 하나의 에이전트가 독립적으로 작업해도 구조가 성립해야 한다.
+- 검증하지 않은 자동화나 운영 흐름은 문서에 적지 않는다.
 
 ## 검증 기준
 
-- 새 Agent가 작업 시작 전에 읽어야 할 문서 순서를 알 수 있어야 한다.
-- 현재 작업 상태는 `project.md`만 보면 판단 가능해야 한다.
-- `ARCHITECTURE.md`와 `docs/modules/*.md`만 읽어도 어디를 먼저 수정해야 할지 좁힐 수 있어야 한다.
-- Claude에게 넘기는 작업 지시는 목적, 변경 파일, 금지 사항, 검증 방법, 완료 조건을 포함해야 한다.
-- 자동 호출을 쓰는 경우 `.claude/handoffs/`에 실행 로그가 남아야 한다.
-- 완료 처리는 구현, 검증, 문서 반영 근거가 있을 때만 해야 한다.
+- 새 에이전트가 `AGENTS.md`와 `README.md`만 읽고 문서 구조를 이해할 수 있어야 한다.
+- 현재 작업 상태는 `project.md`만 보면 파악 가능해야 한다.
+- `ARCHITECTURE.md`와 `docs/modules/*.md`만으로 수정 진입점을 좁힐 수 있어야 한다.
+- 작업 문서는 목적, 변경 대상, 금지 사항, 검증 방법, 완료 조건을 포함해야 한다.
+- 역할 분리 없이도 문서 세트가 독립적으로 동작해야 한다.
 
 ## 주의사항
 
-- 역할 문서만 만들었다고 Agent가 자동 연결되는 것은 아니다.
-- 자동 연결은 CLI, 인증, 실행 스크립트, 로그 저장 정책이 함께 있어야 한다.
-- 한 번에 넓은 범위를 Claude에게 넘기면 리뷰 비용과 충돌 위험이 커진다.
-- `.claude/`, `.codex/`, 로컬 설정, 인증 정보, 빌드 산출물은 Git 추적 대상에서 제외하는 것이 안전하다.
-- 기존 사용자 변경이 있는 파일은 자동 구현 전에 충돌 가능성을 먼저 확인한다.
+- `AGENTS.md`에 아키텍처 설명까지 몰아넣지 않는다.
+- 특정 도구 전용 파일이 있더라도 공통 규칙은 `AGENTS.md` 기준으로 유지한다.
+- 기존 사용자 변경이 있는 파일은 추측으로 덮어쓰지 않는다.
