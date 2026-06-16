@@ -11,6 +11,7 @@
 - `README.md`
 - `business_context.md`
 - `design.md`
+- `verification.md`
 - `ARCHITECTURE.md`
 - `docs/template.md`
 - `docs/modules/*.md`
@@ -22,10 +23,11 @@
 3. `AGENTS.md`
 4. `business_context.md`
 5. `design.md`
-6. `README.md`
-7. 관련 `docs/modules/*.md`
-8. 필요 시 `ARCHITECTURE.md`
-9. 실제 파일
+6. `verification.md`
+7. `README.md`
+8. 관련 `docs/modules/*.md`
+9. 필요 시 `ARCHITECTURE.md`
+10. 실제 파일
 
 이 순서는 단일 기준이다. 다른 문서에는 반복해서 적지 않는다.
 

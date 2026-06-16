@@ -12,6 +12,8 @@
 4. 검증하지 않은 내용은 완료로 적지 않는다.
 5. 구조가 바뀌면 템플릿과 인덱스도 같이 갱신한다.
 6. 읽기 순서는 `docs/collab_protocol.md`를 단일 기준으로 사용한다.
+7. 같은 실수가 반복되면 지시문 추가보다 `verification.md`의 검증 장치(테스트/린트/권한 축소)로 옮긴다.
+8. 같은 시도를 반복해도 진전이 없으면(같은 에러, 같은 diff, 상태가 왔다갔다 함) 멈추고 막힌 지점을 보고한다. 무한 루프 방지 기준은 `verification.md`를 따른다.
 
 ## 크기 기준
 
@@ -24,3 +26,4 @@
 - `project.md`
 - `docs/collab_protocol.md`
 - `docs/template.md`
+- `verification.md`

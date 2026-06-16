@@ -25,6 +25,7 @@
 | P-002 | 최소 지시 중심 구조 보강 | Codex | done | README, 템플릿 보강 | 문서 분리 원칙 반영 |
 | P-003 | 독립 운영 구조 전환 | Codex | done | 루트 운영 문서, 템플릿 정리 | 역할 분리 제거 |
 | P-004 | 연구 근거 및 예시 보강 | Codex | done | README, 운영 규칙, 예시 문서 | 평가 반영 |
+| P-005 | harness engineering 적용 | Claude | done | `docs/modules/harness-engineering.md`, `templates/verification.md`, `verification.md`, README/ARCHITECTURE/AGENTS/collab_protocol/SETUP_STEPS/bootstrap_prompt 갱신 | 검증 루프(feedback)와 무한 루프 방지 조건 추가 |
 
 ## 최근 결정
 
@@ -32,6 +33,8 @@
 - `AGENTS.md`는 최소 규칙만 담고, 상세 설명은 별도 문서로 분리한다.
 - `CLAUDE.md`는 선택적 도구 메모로만 취급한다.
 - 읽기 순서는 `docs/collab_protocol.md`를 단일 기준으로 유지한다.
+- 이 저장소는 harness 중 문서(feedforward) 레이어만 다루고, 검증 루프(feedback)는 `verification.md`로 분리해 정책만 정의한다. 도구 권한·observability는 범위 밖이다.
+- `verification.md`에는 무한 루프 방지 조건(최대 반복 횟수, 무진전 감지, 멈춤 시 보고)을 반드시 포함한다.
 
 ## 꼭 체크해야 할 목록
 

@@ -21,6 +21,8 @@
 - `docs/modules/`에는 핵심 기능별 문서를 최소 3개 이상 만들거나, 기능 수가 더 적으면 모든 핵심 기능을 문서화하라.
 - `AGENTS.md`에는 공통 최소 규칙만 적어라.
 - `AGENTS.md`는 가능하면 50줄 안팎으로 유지하라.
+- `verification.md`에는 computational/inferential 체크와 게이팅 시점을 구분해 적어라.
+- 같은 실수가 반복되면 지시문 추가보다 `verification.md`의 검증 장치(테스트/린트/권한 축소)로 옮기도록 안내하라.
 - 템플릿만 두지 말고 실제로 채워진 예시 문서도 최소 1세트 제공하라.
 - 특정 도구 전용 메모가 필요할 때만 `CLAUDE.md`를 추가하라.
 
@@ -31,6 +33,7 @@
 - `ARCHITECTURE.md`
 - `business_context.md`
 - `design.md`
+- `verification.md`
 - `docs/collab_protocol.md`
 - `docs/template.md`
 - `docs/modules/*.md`
@@ -44,8 +47,9 @@
 4. `README.md` 작성
 5. `ARCHITECTURE.md` 작성
 6. `docs/modules/*.md` 작성
-7. 공통 규칙 문서 작성
-8. `project.md`에 현재 상태와 다음 작업 등록
+7. `verification.md`에 검증 루프(computational/inferential 체크, 게이팅 시점) 정의
+8. 공통 규칙 문서 작성
+9. `project.md`에 현재 상태와 다음 작업 등록
 
 최종 보고 형식:
 - 생성/수정한 문서 목록

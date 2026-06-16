@@ -12,6 +12,7 @@
 - `templates/CLAUDE.md`
 - `templates/ARCHITECTURE.md`
 - `templates/module.md`
+- `templates/verification.md`
 - `templates/bootstrap_prompt.md`
 
 ## 수정 시 주의

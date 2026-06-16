@@ -14,6 +14,7 @@
 |---|---|---|
 | Guide Docs | 전체 적용 순서와 사용 방법 | `docs/modules/guide-docs.md` |
 | Templates | 새 프로젝트에 복사할 템플릿 세트 | `docs/modules/templates.md` |
+| Harness Engineering | harness 개념과 검증 루프 정책 연결 | `docs/modules/harness-engineering.md` |
 
 ## 상위 계층 구조
 
@@ -30,6 +31,7 @@ Policy Layer
 Context Layer
   business_context.md
   design.md
+  verification.md
   ARCHITECTURE.md
   docs/modules/*
 
@@ -65,3 +67,4 @@ Template Layer
 - `SETUP_STEPS.md`
 - `docs/modules/guide-docs.md`
 - `docs/modules/templates.md`
+- `docs/modules/harness-engineering.md`

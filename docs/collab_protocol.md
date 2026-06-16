@@ -11,6 +11,7 @@
 - `README.md`: 전체 구조 인덱스
 - `business_context.md`: 제품 목적과 범위
 - `design.md`: 결과물 판단 기준
+- `verification.md`: 검증/피드백 루프 정책
 - `ARCHITECTURE.md`: 상위 구조와 변경 영향 포인트
 - `docs/template.md`: 작업 등록과 작업 지시 템플릿
 - `docs/modules/*.md`: 기능 또는 문서 묶음별 상세 설명
@@ -22,10 +23,11 @@
 3. `AGENTS.md`
 4. `business_context.md`
 5. `design.md`
-6. `README.md`
-7. 관련 `docs/modules/*.md`
-8. 필요 시 `ARCHITECTURE.md`
-9. 실제 파일
+6. `verification.md`
+7. `README.md`
+8. 관련 `docs/modules/*.md`
+9. 필요 시 `ARCHITECTURE.md`
+10. 실제 파일
 
 이 순서는 이 저장소의 단일 기준이다. 다른 문서에는 같은 내용을 반복해서 적지 않고 이 문서를 참조한다.
 
