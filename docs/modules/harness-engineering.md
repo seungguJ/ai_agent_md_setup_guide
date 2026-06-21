@@ -22,7 +22,16 @@
 | 검증 루프 (feedback, computational/inferential) | `verification.md` | 정책만 정의하고, 실제 실행은 각 프로젝트의 테스트/린트/CI에 위임 |
 | Agent Loop / 반복 종료 조건 (feedback) | `verification.md`의 "무한 루프 방지" | 최대 반복 횟수, 무진전 감지, 멈춤 시 보고 방식을 정의 |
 | 도구·권한 범위 (guardrails) | 다루지 않음 | Claude Code `settings.json`, MCP 권한 설정 등 도구별 설정에서 다룬다 |
+| Skills / 재사용 워크플로 (guides) | 다루지 않음 | SKILL.md·slash command 묶음. 도구별로 별도 설치·등록해야 동작한다. 아래 "범위 밖 참고" 참조 |
 | Observability | 다루지 않음 | 로깅/트레이싱은 런타임별 설정에서 다룬다 |
+
+## 범위 밖 참고: Skills와 공급망 검증
+
+아래는 다른 harness 레이어에 속하고 모두 **별도 설치·등록이 필요한 도구/스킬**이다. 이 저장소(문서 구조)에 코드로 통합하지 않고, 어떤 레이어인지만 매핑한다.
+
+- 재사용 워크플로(Skills): SKILL.md 형식의 워크플로와 slash command 묶음. 도구마다 별도 등록이 필요하다(예: Claude Code는 플러그인 마켓플레이스 등록, Gemini CLI는 skills install). 이 저장소의 문서 규칙은 이런 스킬을 만들 때의 작성 원칙으로 재사용할 수 있다. 참고: https://github.com/addyosmani/agent-skills
+- 스킬 공급망 보안(guardrails): 외부 스킬은 프롬프트 인젝션·데이터 유출 같은 패턴을 포함할 수 있어, 설치 전 점검이 필요하다. 참고: NVIDIA SkillSpector — https://github.com/NVIDIA/SkillSpector
+- 코드베이스 지식 그래프(observability/context tooling): 저장소를 그래프로 만들어 질의하는 별도 도구. 설치 후 slash command로 호출한다. 참고: safishamsi/graphify — https://github.com/safishamsi/graphify
 
 ## 먼저 읽을 파일
 
