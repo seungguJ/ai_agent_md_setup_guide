@@ -6,6 +6,7 @@ Claude Code처럼 `CLAUDE.md`를 프로젝트 메모리로 읽는 도구를 사�
 
 ## 사용 원칙
 
+- Claude Code도 공통 규칙과 읽기 순서를 따른다. 먼저 `AGENTS.md`와 `docs/collab_protocol.md`의 작업 순서를 읽고 시작한다.
 - 공통 규칙은 `AGENTS.md`를 기준으로 유지한다.
 - 이 파일에는 Claude Code에서만 필요한 명령어, 실행 메모, 도구별 주의사항만 적는다.
 - 제품 맥락, 작업 상태, 아키텍처 설명은 중복해서 적지 않는다.
